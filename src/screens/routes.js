@@ -1,0 +1,3 @@
+export const CHANNELS_SCREEN = 'CHANNELS_SCREEN'
+export const CHAT_SCREEN = 'CHAT_SCREEN'
+export const TOPICS_SCREEN = 'TOPICS_SCREEN'
