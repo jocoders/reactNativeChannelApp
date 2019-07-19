@@ -6,5 +6,4 @@
 //export { default as ProfileScreen } from './ProfileScreen'
 
 export * from './AuthScreen'
-export * from './FavoritesScreen'
 export * from './ProfileScreen'

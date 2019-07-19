@@ -30,8 +30,7 @@ const styles = StyleSheet.create({
 })
 
 const SearchBar = props => {
-  console.log('props', props)
-  const { value, onChangeText, isEmpty, onPressXButton } = props
+  const { value, onChangeText, isEmpty, placeholder, onPressXButton } = props
   const { container, subContainer, textInput } = styles
   return (
     <View style={container}>
@@ -43,7 +42,7 @@ const SearchBar = props => {
             value={value}
             autoCapitalize="words"
             onChangeText={onChangeText}
-            placeholder="Search channel..."
+            placeholder={placeholder}
           />
         </View>
         <TouchableOpacity onPress={onPressXButton}>

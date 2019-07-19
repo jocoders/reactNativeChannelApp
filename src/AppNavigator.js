@@ -6,9 +6,10 @@ import {
   createSwitchNavigator,
   createBottomTabNavigator
 } from 'react-navigation'
-import { AuthScreen, FavoritesScreen, ProfileScreen } from './screens'
+import { AuthScreen, ProfileScreen } from './screens'
 import AuthLoadingScreen from './screens/AuthLoadingScreen'
 import ChannelsStack from './screens/ChannelsStack'
+import FavoritesStack from './screens/FavoritesStack'
 import { BLUE, PROJECT_FONT } from './constants'
 
 const AuthStack = createStackNavigator({ AUTH_SCREEN: AuthScreen })
@@ -21,8 +22,8 @@ const AppStack = createBottomTabNavigator(
         tabBarLabel: 'Channels'
       })
     },
-    FAVORITES: {
-      screen: FavoritesScreen,
+    FAVORITES_STACK: {
+      screen: FavoritesStack,
       navigationOptions: () => ({
         tabBarIcon: ({ tintColor }) => <Ionicons style={{ color: tintColor }} name="ios-flower" size={30} />,
         tabBarLabel: 'Favorites'

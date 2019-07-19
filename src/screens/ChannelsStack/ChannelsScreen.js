@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Button, FlatList, Text, StyleSheet } from 'react-native'
-import { ChannelItem, SearchBar, ScreenHeader } from '../../components'
+import { ChannelItem, ModalChannelCard, SearchBar, ScreenHeader } from '../../components'
 import { data } from '../../dataDraft'
 import { TOPICS_SCREEN } from '../routes'
 
@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
 })
 
 const ChannelsScreen = ({ navigation }) => {
-  console.log('navigation', navigation)
+  const { container, textStyle } = styles
+  const [isModalVisible, setModalVisible] = useState(false)
   const [userInput, setInput] = useState({
     value: '',
     isEmpty: true
   })
-  const { container, textStyle } = styles
   const onChangeTexthandler = value => {
     setInput({
       value,
@@ -33,27 +33,32 @@ const ChannelsScreen = ({ navigation }) => {
       isEmpty: true
     })
   }
+  const hideModalHandler = () => {
+    setModalVisible(false)
+  }
   const leftIconPressHandler = () => {
     console.log('Left icon pressed')
   }
   const rightIconPressHandler = () => {
-    console.log('Left icon pressed')
+    setModalVisible(true)
   }
   return (
     <View style={container}>
       <ScreenHeader
         header="Channels"
-        leftIconName="ios-add"
         rightIconName="ios-add"
         onLeftIconPress={leftIconPressHandler}
         onRightIconPress={rightIconPressHandler}
       />
       <SearchBar
         value={userInput.value}
+        placeholder="Search channel..."
         isEmpty={userInput.isEmpty}
         onChangeText={onChangeTexthandler}
         onPressXButton={onPressXButtonHandler}
       />
+      <ModalChannelCard createChannel={hideModalHandler} hideModal={hideModalHandler} visible={isModalVisible} />
+
       <View style={{ alignItems: 'center' }}>
         <FlatList
           data={data}

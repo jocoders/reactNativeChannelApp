@@ -1,16 +1,60 @@
 import React from 'react'
-import { Text, Image, View, TouchableOpacity, TouchableNativeFeedback, Platform, StyleSheet } from 'react-native'
+import { Image, Platform, TouchableOpacity, TouchableNativeFeedback, StyleSheet, Text, View } from 'react-native'
 import { BLUE } from '../constants'
 
 const styles = StyleSheet.create({
+  amountStyle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#ffffff'
+  },
+  avatarContainer: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatarImageStyle: {
+    width: 44,
+    height: 44,
+    borderRadius: 44 / 2
+  },
   container: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     padding: 10,
-    height: 105,
+    height: 90,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f0f0f0'
+  },
+  commentsCountStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 20,
+    width: 40,
+    backgroundColor: BLUE,
+    borderRadius: 10
+  },
+  headerContainer: {
+    flex: 4,
+    paddingLeft: 5,
+    height: '100%',
+    justifyContent: 'space-between'
+  },
+  headerSubContainer: {
+    flexDirection: 'row'
+  },
+  headerStyle: {
+    fontSize: 12,
+    fontWeight: 'bold'
+  },
+  headerDescription: {
+    fontSize: 12
+  },
+  messageContainer: {},
+  messageStyle: {
+    fontSize: 12
   },
   shadowStyle: {
     shadowColor: '#000',
@@ -22,139 +66,61 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4
   },
-  textStyle: {
-    fontSize: 25,
-    color: '#ffffff'
-  },
-  subContainerUp: {
-    width: '100%',
-    height: '60%',
-    flexDirection: 'row'
-  },
-  subContainerDown: {
-    width: '100%',
-    height: '40%',
-    flexDirection: 'row'
-  },
-  itemImage: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  itemHeader: {
-    flex: 4,
-    marginLeft: 2,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  itemTime: {
-    flex: 1
-  },
-  itemBlock: {
-    flex: 1
-  },
-  itemComments: {
-    flex: 2,
-    marginLeft: 2,
-    justifyContent: 'center'
-  },
-  itemButton: {
-    flex: 3,
-    justifyContent: 'center',
-    alignItems: 'flex-end'
-  },
-  avatarImageStyle: {
-    width: 44,
-    height: 44,
-    borderRadius: 44 / 2,
-    backgroundColor: 'black'
-  },
-  subHeader: {
-    flex: 2
-  },
-  headerMain: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-  textHeaderStyle: {
-    fontWeight: 'bold',
-    flexDirection: 'row'
-  },
   timeStyle: {
-    flex: 1,
-    paddingTop: 4,
     fontSize: 10
   },
-  timeBlock: {
-    flex: 2
+  timeContainer: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end'
   },
-  textButtonStyle: {
-    color: '#586589',
-    fontSize: 8,
+  topicStyle: {
+    fontSize: 12,
     fontWeight: 'bold'
-  },
-  buttonStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '70%',
-    height: 30,
-    borderRadius: 10,
-    backgroundColor: BLUE
   }
 })
 
-const FavoritesItem = props => {
+const FavoritesItem = (props, { navigation }) => {
+  const { commentsCount, channelHeader, itemAvatarImage, messageText, onPress, time, topic, userMessageName } = props
   const {
-    container,
-    subContainerDown,
-    subContainerUp,
-    itemImage,
-    itemHeader,
-    itemTime,
-    itemBlock,
-    itemComments,
-    itemButton,
+    amountStyle,
+    avatarContainer,
     avatarImageStyle,
-    subHeader,
-    headerMain,
-    textHeaderStyle,
+    container,
+    commentsCountStyle,
+    headerContainer,
+    headerSubContainer,
+    headerStyle,
+    headerDescription,
+    messageStyle,
+    messageContainer,
+    shadowStyle,
     timeStyle,
-    timeBlock,
-    buttonStyle,
-    textButtonStyle,
-    shadowStyle
+    topicStyle,
+    timeContainer
   } = styles
-  const { itemAvatarImage, header, topic, time, onPress, commentsCount } = props
   const item = (
     <View style={[container, shadowStyle]}>
-      <View style={subContainerUp}>
-        <View style={itemImage}>
-          <Image style={avatarImageStyle} resizeMode="stretch" source={itemAvatarImage} />
+      <View style={avatarContainer}>
+        <Image style={avatarImageStyle} resizeMode="stretch" source={itemAvatarImage} />
+      </View>
+      <View style={headerContainer}>
+        <View style={headerSubContainer}>
+          <Text style={headerStyle}>Channel: </Text>
+          <Text style={headerDescription}>{channelHeader}</Text>
         </View>
-        <View style={itemHeader}>
-          <View style={headerMain}>
-            <Text style={textHeaderStyle}>Channel: </Text>
-            <Text>{header}</Text>
-          </View>
-          <View style={subHeader}>
-            <Text style={textHeaderStyle}>Topic: {topic}</Text>
-          </View>
-        </View>
-        <View style={itemTime}>
-          <Text style={timeStyle}>{time}</Text>
-          <View style={timeBlock} />
+        <Text style={topicStyle}>Topic: {topic}</Text>
+        <View style={messageContainer}>
+          <Text style={messageStyle}>
+            {userMessageName}: {messageText}
+          </Text>
         </View>
       </View>
-      <View style={subContainerDown}>
-        <View style={itemBlock} />
-        <View style={itemComments}>
-          <Text>{commentsCount} comments</Text>
-        </View>
-        <View style={itemButton}>
-          <View style={buttonStyle}>
-            <Text style={textButtonStyle}>JOIN CONVERSATION</Text>
-          </View>
+      <View style={timeContainer}>
+        <Text style={timeStyle}>{time}</Text>
+        <View style={commentsCountStyle}>
+          <Text style={amountStyle}>{commentsCount}</Text>
         </View>
       </View>
     </View>

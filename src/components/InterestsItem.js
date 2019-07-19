@@ -25,15 +25,15 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   listItem: {
-    height: 100,
-    width: 140,
-    margin: 8
+    height: 140,
+    width: 120,
+    margin: 6
   }
 })
 
-const ChannelItem = props => {
-  const { headerStyle, imageBackgroundStyle, listItem } = styles
-  const { channelItemHeader, imageSource, onPress } = props
+const InterestsItem = (props, { navigation }) => {
+  const { listItem, headerStyle, imageBackgroundStyle } = styles
+  const { imageSource, channelItemHeader, onPress } = props
   const item = (
     <View style={listItem}>
       <ImageBackground source={imageSource} style={imageBackgroundStyle}>
@@ -47,4 +47,4 @@ const ChannelItem = props => {
   return <TouchableOpacity onPress={onPress}>{item}</TouchableOpacity>
 }
 
-export default ChannelItem
+export default InterestsItem

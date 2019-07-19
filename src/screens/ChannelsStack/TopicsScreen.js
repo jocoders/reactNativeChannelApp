@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
-import { ScreenHeader, FavoritesItem, Header } from '../../components'
+import { SearchBar, ScreenHeader, TopicItem } from '../../components'
 import { fdata } from '../../dataDraft'
 import { CHAT_SCREEN } from '../routes'
 
@@ -17,6 +17,22 @@ const styles = StyleSheet.create({
 
 const TopicsScreen = ({ navigation }) => {
   const { container, subContainer, textStyle } = styles
+  const [userInput, setInput] = useState({
+    value: '',
+    isEmpty: true
+  })
+  const onChangeTexthandler = value => {
+    setInput({
+      value,
+      isEmpty: false
+    })
+  }
+  const onPressXButtonHandler = () => {
+    setInput({
+      value: '',
+      isEmpty: true
+    })
+  }
   const renderSeparator = () => (
     <View
       style={{
@@ -33,12 +49,20 @@ const TopicsScreen = ({ navigation }) => {
   const rightIconPressHandler = () => {
     console.log('RightIcon pressed')
   }
-  const renderHeader = () => <Header headerText="My trending topics" />
+  const renderHeader = () => (
+    <SearchBar
+      value={userInput.value}
+      placeholder="Search topic..."
+      isEmpty={userInput.isEmpty}
+      onChangeText={onChangeTexthandler}
+      onPressXButton={onPressXButtonHandler}
+    />
+  )
 
   return (
     <View style={container}>
       <ScreenHeader
-        header="Favorites"
+        header="Topics"
         leftIconName="ios-arrow-back"
         rightIconName="ios-add"
         onLeftIconPress={() => navigation.goBack()}
@@ -52,7 +76,7 @@ const TopicsScreen = ({ navigation }) => {
           keyboardDismissMode="on-drag"
           keyExtractor={item => item.header}
           renderItem={({ item }) => (
-            <FavoritesItem
+            <TopicItem
               itemAvatarImage={item.itemAvatarImage}
               header={item.header}
               topic={item.topic}

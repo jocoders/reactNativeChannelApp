@@ -1,7 +1,8 @@
 import React from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
-import { ScreenHeader, FavoritesItem, Header } from '../components'
-import { fdata } from '../dataDraft'
+import { ScreenHeader, FavoritesItem, Header } from '../../components'
+import { CHAT_FAVORITES_SCREEN } from '../routes'
+import { ffdata } from '../../dataDraft'
 
 const styles = StyleSheet.create({
   container: {
@@ -45,19 +46,21 @@ const FavoritesScreen = ({ navigation }) => {
       />
       <View style={{ justifyContent: 'center' }}>
         <FlatList
-          data={fdata}
+          data={ffdata}
           autoCorrect={false}
           keyboardShouldPersistTaps="always"
           keyboardDismissMode="on-drag"
-          keyExtractor={item => item.header}
+          keyExtractor={item => item.channelHeader}
           renderItem={({ item }) => (
             <FavoritesItem
               itemAvatarImage={item.itemAvatarImage}
-              header={item.header}
+              channelHeader={item.channelHeader}
               topic={item.topic}
               time={item.time}
               commentsCount={item.commentsCount}
-              onPress={() => console.log('Item pressed')}
+              userMessageName={item.userMessageName}
+              messageText={item.messageText}
+              onPress={() => navigation.navigate(CHAT_FAVORITES_SCREEN)}
             />
           )}
           ItemSeparatorComponent={renderSeparator}
@@ -68,4 +71,4 @@ const FavoritesScreen = ({ navigation }) => {
   )
 }
 
-export { FavoritesScreen }
+export default FavoritesScreen
